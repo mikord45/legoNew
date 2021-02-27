@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/libs/jquerry.js"></script>
+    <script src="/libs/three_ver97.js"></script>
+    <script src="/libs/OrbitControls.js"></script>
+    <script src="/libs/Stats.js"></script>
+    <script src="/js/Block.js"></script>
+    <script src="/js/Game.js"></script>
+    <script src="/js/GridItem.js"></script>
+    <script src="/js/SentBlock.js"></script>
+    <script src="/js/Net.js"></script>
+    <script src="/js/Main.js"></script>
+    <script>
+        javascript: (function () { var script = document.createElement('script'); script.onload = function () { var stats = new Stats(); document.body.appendChild(stats.dom); requestAnimationFrame(function loop() { stats.update(); requestAnimationFrame(loop) }); }; script.src = '//mrdoob.github.io/stats.js/build/stats.min.js'; document.head.appendChild(script); })()
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on("onconnect", function (data) {
+            game.clientID = data.clientName
+            alert(data.clientName)
+        })
+        // console.log(game)
+
+        setTimeout(function () {
+            game.socket = socket
+        }, 1500)
+
+        socket.on("newBlock", function (data) {
+            // console.log(data)
+            net.add(data.posX, data.posY, data.posZ)
+        })
+        socket.on("newColor", function (data) {
+            net.newColor(data.color)
+        })
+        socket.on("newSize", function (data) {
+            net.newSize(data.size, data.posX, data.posY, data.posZ)
+        })
+        socket.on("newDirection", function (data) {
+            net.newDirection(data.direction, data.posX, data.posZ)
+        })
+        socket.on("rem", function (data) {
+            net.rem()
+        })
+        socket.on("up", function (data) {
+            // console.log(data)
+            net.upt(data.tab)
+        })
+    </script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <!-- <button></button> -->
+</body>
+
+</html>
