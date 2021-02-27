@@ -10,7 +10,7 @@ click - create a new block
 
 ctr- change block size
 
-shift- change block position
+space- change block position
 
 esc- change block color
 
